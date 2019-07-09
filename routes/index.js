@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const LeaderController = require('../Controllers/LeaderController');
 const AuthController = require('../Controllers/AuthController');
+const EventController = require('../Controllers/EventController');
 const VerifyToken = require('../Http/Middlewares/VerifyToken');
 
 router.get('/', (req, res) => {
@@ -30,5 +31,16 @@ router.route('/api/auth/login').
 
 router.route('/api/auth/user').
     get(VerifyToken, AuthController.user);
+
+
+//Event routes
+router.route('/api/events').
+    get(VerifyToken, EventController.index)
+    .post(VerifyToken, EventController.create);
+
+router.route('/api/events/:id')
+    .get(VerifyToken, EventController.show)
+    .put(VerifyToken, EventController.update)
+    .delete(VerifyToken, EventController.delete);
 
 module.exports = router;
